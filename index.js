@@ -3,13 +3,19 @@ const {
   pathJoin,
   capitalize,
   execAsyncQuestion,
+  readlineManager,
   createFolderIfNotExist,
 } = require('./utils');
 
 const init = async () => {
   const root = __dirname;
-  const folders = await execAsyncQuestion('Enter the destination folder names; ')
-  const ext = await execAsyncQuestion('Enter the extension [Default: svg]; ')
+  const folders = await execAsyncQuestion('Enter the destination folder names; ');
+  const extensions = await execAsyncQuestion('Enter the extension [Default: svg]; ');
+  const ext = extensions.length > 0 ? extensions[0] : 'svg';
+  readlineManager.close();
+
+  const targetDir = pathJoin(root, 'target')
+  createFolderIfNotExist(targetDir)
 
   const newDir = pathJoin(root, 'new')
   createFolderIfNotExist(newDir)
@@ -17,7 +23,7 @@ const init = async () => {
   folders.forEach(folderName => {
     const outputDir = pathJoin(newDir, folderName);
     createFolderIfNotExist(outputDir)
-    const inputDir = pathJoin(root, folderName);
+    const inputDir = pathJoin(targetDir, folderName);
 
     const files = fs.readdirSync(inputDir);
     files.forEach(fileName => {

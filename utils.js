@@ -29,7 +29,6 @@ const execAsyncQuestion = (question) => {
   return new Promise((resolve) => {
     readlineManager.question(question, value => {
       resolve(value.split(' ').filter(field => field));
-      readlineManager.close();
     });
   });
 };

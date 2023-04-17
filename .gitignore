@@ -105,3 +105,8 @@ dist
 
 # TernJS port aws
 .tern-port
+
+# Bussiness Logic
+target/*
+!target/.gitkeep
+new
